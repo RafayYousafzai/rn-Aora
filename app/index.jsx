@@ -1,6 +1,8 @@
 import { Image, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { images } from "../constants";
 import { StatusBar } from "expo-status-bar";
+import CustomButton from "../components/CustomButton";
+import { router } from "expo-router";
 
 export default function Index() {
   return (
@@ -42,11 +44,11 @@ export default function Index() {
             Exploration with Aora
           </Text>
 
-          {/* <CustomButton
+          <CustomButton
             title="Continue with Email"
             handlePress={() => router.push("/sign-in")}
             containerStyles="w-full mt-7"
-          /> */}
+          />
         </View>
       </ScrollView>
 
