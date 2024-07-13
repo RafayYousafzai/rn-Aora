@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { View, Text, ScrollView, Dimensions, Alert, Image } from "react-native";
 
 import { images } from "../../constants";
-// import { createUser } from "../../lib/appwrite";
+import { createUser } from "../../lib/appwrite";
 import FormField from "../../components/FormField";
 import CustomButton from "../../components/CustomButton";
 // import { useGlobalContext } from "../../context/GlobalProvider";
@@ -23,17 +23,19 @@ const SignUp = () => {
     // if (form.username === "" || form.email === "" || form.password === "") {
     //   Alert.alert("Error", "Please fill in all fields");
     // }
-    // setSubmitting(true);
-    // try {
-    //   const result = await createUser(form.email, form.password, form.username);
-    //   setUser(result);
-    //   setIsLogged(true);
-    //   router.replace("/home");
-    // } catch (error) {
-    //   Alert.alert("Error", error.message);
-    // } finally {
-    //   setSubmitting(false);
-    // }
+    setSubmitting(true);
+    try {
+      const result = await createUser(form.email, form.password, form.username);
+      console.log({ result });
+      setUser(result);
+      setIsLogged(true);
+      router.replace("/home");
+    } catch (error) {
+      Alert.alert("Error", error.message);
+      console.log(error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
