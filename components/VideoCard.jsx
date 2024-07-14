@@ -3,9 +3,14 @@ import { ResizeMode, Video } from "expo-av";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import { icons } from "../constants";
+import { bookmark } from "../lib/appwrite";
 
-const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
+const VideoCard = ({ title, creator, avatar, thumbnail, video, id }) => {
   const [play, setPlay] = useState(false);
+
+  const toggleBookmark = async () => {
+    await bookmark(id);
+  };
 
   return (
     <View className="flex flex-col items-center px-4 mb-14">
@@ -34,10 +39,15 @@ const VideoCard = ({ title, creator, avatar, thumbnail, video }) => {
             </Text>
           </View>
         </View>
-
-        <View className="pt-2">
-          <Image source={icons.menu} className="w-5 h-5" resizeMode="contain" />
-        </View>
+        <TouchableOpacity onPress={toggleBookmark}>
+          <View className="pt-2">
+            <Image
+              source={icons.bookmark}
+              className="w-5 h-5"
+              resizeMode="contain"
+            />
+          </View>
+        </TouchableOpacity>
       </View>
 
       {play ? (
