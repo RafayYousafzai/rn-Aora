@@ -15,10 +15,7 @@ import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
 import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import useAppWrite from "../../lib/useAppWrite";
-import VideoCard from "../../components/VideoCard";
-// import useAppwrite from "../../lib/useAppwrite";
-// import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
-// import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
+import VideoCard from "../../components/VideoCard"; 
 
 const Home = () => {
   const { data: posts, refetch } = useAppWrite(getAllPosts);
