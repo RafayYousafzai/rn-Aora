@@ -32,7 +32,7 @@ const Create = () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes:
         selectType === "image"
-          ? ImagePicker.MediaTypeOptions.Image
+          ? ImagePicker.MediaTypeOptions.Images
           : ImagePicker.MediaTypeOptions.Videos,
       allowsEditing: true,
       aspect: [4, 3],
