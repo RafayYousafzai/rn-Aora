@@ -13,33 +13,17 @@ import { images } from "../../constants";
 import SearchInput from "../../components/SearchInput";
 import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
-import getAllPosts from "../../lib/appwrite";
+import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
+import useAppWrite from "../../lib/useAppWrite";
+import VideoCard from "../../components/VideoCard";
 // import useAppwrite from "../../lib/useAppwrite";
 // import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 // import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
 
 const Home = () => {
-  // const { data: posts, refetch } = useAppwrite(getAllPosts);
-  // const { data: latestPosts } = useAppwrite(getLatestPosts);
+  const { data: posts, refetch } = useAppWrite(getAllPosts);
 
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    const fetch = async () => {
-      setLoading(true);
-      try {
-        const response = await getAllPosts();
-        console.log(response);
-        setData(response);
-      } catch (error) {
-        Alert(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetch();
-  }, []);
+  const { data: latestPosts } = useAppWrite(getLatestPosts);
 
   const [refreshing, setRefreshing] = useState(false);
 
@@ -58,22 +42,15 @@ const Home = () => {
   return (
     <SafeAreaView className="bg-primary">
       <FlatList
-        data={{
-          id: "dsa",
-          title: "dsa",
-          thumbnail: "dsa",
-          video: "dsa",
-          username: "dsa",
-          avatar: "dsa",
-        }}
+        data={posts}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <VideoCard
             title={item.title}
             thumbnail={item.thumbnail}
             video={item.video}
-            creator={item.creator.username}
-            avatar={item.creator.avatar}
+            // creator={item.creator.username}
+            // avatar={item.creator.avatar}
           />
         )}
         ListHeaderComponent={() => (
@@ -104,7 +81,7 @@ const Home = () => {
                 Latest Videos
               </Text>
               {/* latestPosts */}
-              <Trending posts={[] ?? []} />
+              <Trending posts={latestPosts ?? []} />
             </View>
           </View>
         )}

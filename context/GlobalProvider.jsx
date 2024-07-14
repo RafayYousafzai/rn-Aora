@@ -8,7 +8,7 @@ const useGlobalContext = () => useContext(GlobalContext);
 const GlobalProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null); // or {} depending on your logic
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     getCurrentUser()
