@@ -4,6 +4,8 @@ import { FlatList, Image, RefreshControl, Text, View } from "react-native";
 
 import { images } from "../../constants";
 import SearchInput from "../../components/SearchInput";
+import Trending from "../../components/Trending";
+import EmptyState from "../../components/EmptyState";
 // import useAppwrite from "../../lib/useAppwrite";
 // import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 // import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
@@ -74,20 +76,20 @@ const Home = () => {
               <Text className="text-lg font-pregular text-gray-100 mb-3">
                 Latest Videos
               </Text>
-
-              {/* <Trending posts={latestPosts ?? []} /> */}
+              {/* latestPosts */}
+              <Trending posts={[] ?? []} />
             </View>
           </View>
         )}
-        // ListEmptyComponent={() => (
-        //   <EmptyState
-        //     title="No Videos Found"
-        //     subtitle="No videos created yet"
-        //   />
-        // )}
-        // refreshControl={
-        //   <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        // }
+        ListEmptyComponent={() => (
+          <EmptyState
+            title="No Videos Found"
+            subtitle="No videos created yet"
+          />
+        )}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
       />
     </SafeAreaView>
   );
