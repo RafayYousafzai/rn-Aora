@@ -40,7 +40,7 @@ const Home = () => {
     <SafeAreaView className="bg-primary">
       <FlatList
         data={posts}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
           <VideoCard
             title={item.title}
