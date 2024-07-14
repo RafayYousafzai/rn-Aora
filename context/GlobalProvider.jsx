@@ -3,12 +3,12 @@ import { getCurrentUser } from "../lib/appwrite";
 
 const GlobalContext = createContext();
 
-export const useGlobalContext = () => useContext(GlobalProvider);
+const useGlobalContext = () => useContext(GlobalContext);
 
 const GlobalProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null); // or {} depending on your logic
 
   useEffect(() => {
     getCurrentUser()
@@ -29,10 +29,10 @@ const GlobalProvider = ({ children }) => {
     <GlobalContext.Provider
       value={{
         isLoggedIn,
-        setIsLoggedIn,
         isLoading,
-        setIsLoading,
         user,
+        setIsLoggedIn,
+        setIsLoading,
         setUser,
       }}
     >
@@ -41,4 +41,5 @@ const GlobalProvider = ({ children }) => {
   );
 };
 
-export default GlobalProvider;
+export { GlobalProvider };
+export default useGlobalContext;
