@@ -1,11 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { FlatList, Image, RefreshControl, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  Image,
+  RefreshControl,
+  Text,
+  View,
+} from "react-native";
 
 import { images } from "../../constants";
 import SearchInput from "../../components/SearchInput";
 import Trending from "../../components/Trending";
 import EmptyState from "../../components/EmptyState";
+import getAllPosts from "../../lib/appwrite";
 // import useAppwrite from "../../lib/useAppwrite";
 // import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 // import { EmptyState, SearchInput, Trending, VideoCard } from "../../components";
@@ -13,6 +21,25 @@ import EmptyState from "../../components/EmptyState";
 const Home = () => {
   // const { data: posts, refetch } = useAppwrite(getAllPosts);
   // const { data: latestPosts } = useAppwrite(getLatestPosts);
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    const fetch = async () => {
+      setLoading(true);
+      try {
+        const response = await getAllPosts();
+        console.log(response);
+        setData(response);
+      } catch (error) {
+        Alert(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetch();
+  }, []);
 
   const [refreshing, setRefreshing] = useState(false);
 
