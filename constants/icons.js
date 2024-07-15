@@ -11,6 +11,8 @@ import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
+import ribbon from "../assets/icons/ribbon.png";
+import ribbon_outline from "../assets/icons/ribbon_outline.png";
 
 export default {
   play,
@@ -26,4 +28,6 @@ export default {
   logout,
   eyeHide,
   eye,
+  ribbon,
+  ribbon_outline,
 };

@@ -4,12 +4,17 @@ import { View, Text, TouchableOpacity, Image } from "react-native";
 
 import { icons } from "../constants";
 import { bookmark } from "../lib/appwrite";
+import useGlobalContext from "../context/GlobalProvider";
 
 const VideoCard = ({ title, creator, avatar, thumbnail, video, id }) => {
+  const { user } = useGlobalContext();
+  const [isLiked, setIsLiked] = useState(user.likes.includes(id));
+
   const [play, setPlay] = useState(false);
 
   const toggleBookmark = async () => {
     await bookmark(id);
+    setIsLiked(!isLiked);
   };
 
   return (
@@ -40,13 +45,12 @@ const VideoCard = ({ title, creator, avatar, thumbnail, video, id }) => {
           </View>
         </View>
         <TouchableOpacity onPress={toggleBookmark}>
-          <View className="pt-2">
-            <Image
-              source={icons.bookmark}
-              className="w-5 h-5"
-              resizeMode="contain"
-            />
-          </View>
+          <Image
+            source={isLiked ? icons.ribbon : icons.ribbon_outline}
+            className="w-7 h-7"
+            resizeMode="contain"
+            style={{ tintColor: "white" }}
+          />
         </TouchableOpacity>
       </View>
 
