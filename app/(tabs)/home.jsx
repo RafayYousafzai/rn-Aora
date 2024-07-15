@@ -78,7 +78,6 @@ const Home = () => {
               <Text className="text-lg font-pregular text-gray-100 mb-3">
                 Latest Videos
               </Text>
-              {/* latestPosts */}
               <Trending posts={latestPosts ?? []} />
             </View>
           </View>

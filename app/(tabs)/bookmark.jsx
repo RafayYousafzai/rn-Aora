@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import useAppwrite from "../../lib/useAppWrite";
 import VideoCard from "../../components/VideoCard";
 import EmptyState from "../../components/EmptyState";
-import SearchInput from "../../components/SearchInput";
+import SearchField from "../../components/SearchField";
 import { getAllBookmarks } from "../../lib/appwrite";
 
 const Bookmark = () => {
@@ -64,7 +64,7 @@ const Bookmark = () => {
               </Text>
 
               <View className="mt-6 mb-8">
-                <SearchInput
+                <SearchField
                   initialQuery={""}
                   handlePress={(query) => handleSearch(query)}
                 />

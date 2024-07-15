@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { router, usePathname } from "expo-router";
-import { View, TouchableOpacity, Image, TextInput, Alert } from "react-native";
+import { View, TouchableOpacity, Image, TextInput } from "react-native";
 
 import { icons } from "../constants";
 
-const SearchInput = ({ initialQuery }) => {
-  const pathname = usePathname();
+const SearchField = ({ initialQuery, handlePress }) => {
   const [query, setQuery] = useState(initialQuery || "");
 
   return (
@@ -20,13 +18,7 @@ const SearchInput = ({ initialQuery }) => {
 
       <TouchableOpacity
         onPress={() => {
-          if (query === "")
-            return Alert.alert(
-              "Missing Query",
-              "Please input something to search results across database"
-            );
-          if (pathname.startsWith("/search")) router.setParams({ query });
-          else router.push(`/search/${query}`);
+          handlePress(query);
         }}
       >
         <Image source={icons.search} className="w-5 h-5" resizeMode="contain" />
@@ -35,4 +27,4 @@ const SearchInput = ({ initialQuery }) => {
   );
 };
 
-export default SearchInput;
+export default SearchField;
