@@ -8,7 +8,7 @@ import { icons } from "../../constants";
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
-    <View className="flex items-center justify-center gap-2">
+    <View className="flex items-center justify-center gap-2 w-14  h-full ">
       <Image
         source={icon}
         resizeMode="contain"
@@ -16,7 +16,9 @@ const TabIcon = ({ icon, color, name, focused }) => {
         className="w-6 h-6"
       />
       <Text
-        className={`${focused ? "font-psemibold" : "font-pregular"} text-xs`}
+        className={`${
+          focused ? "font-psemibold" : "font-pregular"
+        } text-center text-[10px] w-full `}
         style={{ color: color }}
       >
         {name}
@@ -41,7 +43,8 @@ const TabLayout = () => {
             backgroundColor: "#161622",
             borderTopWidth: 1,
             borderTopColor: "#232533",
-            height: 84,
+            height: 70,
+            paddingTop: 16,
           },
         }}
       >
