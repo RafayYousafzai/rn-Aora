@@ -1,20 +1,43 @@
-import { useState } from "react";
-import { ResizeMode, Video } from "expo-av";
+import { useState, useRef } from "react";
 import { View, Text, TouchableOpacity, Image } from "react-native";
-
+import { useVideoPlayer, VideoView } from "expo-video"; // Import from expo-video
 import { icons } from "../constants";
 import { bookmark } from "../lib/appwrite";
 import useGlobalContext from "../context/GlobalProvider";
 
 const VideoCard = ({ title, creator, avatar, thumbnail, video, id }) => {
   const { user } = useGlobalContext();
-  const [isLiked, setIsLiked] = useState(user.likes.includes(id));
-
+  const [isLiked, setIsLiked] = useState(user?.likes?.includes(id) || false); // Add optional chaining for safety
   const [play, setPlay] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false); // Track if video is minimized
+
+  // Initialize the video player
+  const player = useVideoPlayer(video, (player) => {
+    player.loop = false; // Disable looping
+    player.muted = false; // Enable sound
+  });
 
   const toggleBookmark = async () => {
-    await bookmark(id);
-    setIsLiked(!isLiked);
+    const res = await bookmark(id);
+    console.log(res);
+    if (res) {
+      setIsLiked(!isLiked);
+    }
+  };
+
+  const handlePlayPause = () => {
+    if (player.playing) {
+      player.pause();
+    } else {
+      player.play();
+    }
+  };
+
+  const handleFullscreen = () => {
+    if (isMinimized) {
+      setIsMinimized(false); // Exit minimized mode
+      player.play(); // Resume playback
+    }
   };
 
   return (
@@ -55,18 +78,33 @@ const VideoCard = ({ title, creator, avatar, thumbnail, video, id }) => {
       </View>
 
       {play ? (
-        <Video
-          source={{ uri: video }}
-          className="w-full h-60 rounded-xl mt-3"
-          resizeMode={ResizeMode.CONTAIN}
-          useNativeControls
-          shouldPlay
-          onPlaybackStatusUpdate={(status) => {
-            if (status.didJustFinish) {
-              setPlay(false);
-            }
-          }}
-        />
+        <View className="w-full h-60 rounded-xl mt-3">
+          <VideoView
+            style={{ width: "100%", height: "100%", borderRadius: 12 }}
+            player={player}
+            allowsFullscreen
+            allowsPictureInPicture
+            onPictureInPictureStart={() => setIsMinimized(true)} // Track when minimized
+            onPictureInPictureStop={() => setIsMinimized(false)} // Track when restored
+            nativeControlsProps={{
+              showFullscreenButton: true, // Always show fullscreen button
+              showPlaybackControls: !isMinimized, // Hide other controls when minimized
+            }}
+          />
+          {isMinimized && (
+            <TouchableOpacity
+              onPress={handleFullscreen}
+              className="absolute bottom-2 right-2 bg-black/50 p-2 rounded-full"
+            >
+              <Image
+                source={icons.fullscreen}
+                className="w-6 h-6"
+                resizeMode="contain"
+                style={{ tintColor: "white" }}
+              />
+            </TouchableOpacity>
+          )}
+        </View>
       ) : (
         <TouchableOpacity
           activeOpacity={0.7}

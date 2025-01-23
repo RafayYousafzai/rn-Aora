@@ -7,15 +7,26 @@ import VideoCard from "../../components/VideoCard";
 import EmptyState from "../../components/EmptyState";
 import SearchField from "../../components/SearchField";
 import { getAllBookmarks } from "../../lib/appwrite";
+import useGlobalContext from "../../context/GlobalProvider";
+import { useFocusEffect } from "expo-router";
 
 const Bookmark = () => {
+  const { refreshUser } = useGlobalContext();
+
   const { data, refetch } = useAppwrite(getAllBookmarks);
+
   const [refreshing, setRefreshing] = useState(false);
+
   const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     setFilteredData(data);
   }, [data]);
+
+  useFocusEffect(() => {
+    refreshUser();
+    refetch();
+  });
 
   const onRefresh = async () => {
     setRefreshing(true);

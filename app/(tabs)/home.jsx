@@ -16,8 +16,11 @@ import EmptyState from "../../components/EmptyState";
 import { getAllPosts, getLatestPosts } from "../../lib/appwrite";
 import useAppWrite from "../../lib/useAppWrite";
 import VideoCard from "../../components/VideoCard";
+import useGlobalContext from "../../context/GlobalProvider";
 
 const Home = () => {
+  const { refreshUser } = useGlobalContext();
+
   const { data: posts, refetch } = useAppWrite(getAllPosts);
 
   const { data: latestPosts } = useAppWrite(getLatestPosts);
@@ -30,11 +33,10 @@ const Home = () => {
     setRefreshing(false);
   };
 
-  // one flatlist
-  // with list header
-  // and horizontal flatlist
-
-  //  we cannot do that with just scrollview as there's both horizontal and vertical scroll (two flat lists, within trending)
+  // useFocusEffect(() => {
+  //   refreshUser();
+  //   refetch();
+  // });
 
   return (
     <SafeAreaView className="bg-primary">
@@ -59,7 +61,7 @@ const Home = () => {
                   Welcome Back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  JSMastery
+                  SUPERVID
                 </Text>
               </View>
 

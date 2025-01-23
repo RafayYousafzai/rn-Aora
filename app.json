@@ -23,9 +23,7 @@
         "backgroundColor": "#161622"
       },
       "package": "com.primedev.aora",
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "bundler": "metro",
@@ -41,7 +39,14 @@
         }
       ],
       "expo-font",
-      "expo-video"
+      "expo-video",
+      [
+        "expo-video",
+        {
+          "supportsBackgroundPlayback": true,
+          "supportsPictureInPicture": true
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
